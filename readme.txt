@@ -1,4 +1,4 @@
-NORMALIZATION V3.5 - 12/2020
+NORMALIZATION V4.0 - 4/2021
 Ramy Eskander
 rnd2110@columbia.edu
 =================================
@@ -6,14 +6,15 @@ rnd2110@columbia.edu
 Currently Supported Languages:
 ================================
 - English
-- Swahili
-- Tagalog
-- Somali
-- Lithuanian
-- Bulgarian
-- Pashto
-- Farsi
-- Kazakh
+- Swahili (1A)
+- Tagalog (1B)
+- Somali (1S)
+- Lithuanian (2B)
+- Bulgarian (2S)
+- Pashto (2C)
+- Farsi (3C)
+- Kazakh (3C)
+- Georgian (3B)
 
 Updates since V3.2
 ================================
@@ -22,6 +23,11 @@ Updates since V3.2
 - Numbers are checked before punctuation removal, so that numeric periods, for instance, remain intact.
 - '&' is treated as a punctuation mark (as Python built-in punctuation checks are used)
 - Isolated single quotations are differentiated from apostrophes.
+
+Updates since V3.5
+================================
+- Added support for Georgian
+- Better coverage of punctuation marks, symbols and apostrophe.
 
 Usage (default config):
 ===========================

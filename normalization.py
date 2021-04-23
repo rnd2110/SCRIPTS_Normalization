@@ -1,6 +1,6 @@
 '''
-Updated on December 15th, 2020
-Version 3.5
+Updated on April 21st, 2021
+Version 4.0
 
 @author: reskander
 '''
@@ -36,6 +36,8 @@ def process(language, text, letters_to_keep='', letters_to_remove='', lowercase=
         language = "FAS"
     elif language == '3C' or language == 'KAZAKH' or language == 'KAZ' or language == 'KK':
         language = "KAZ"
+    elif language == '3B' or language == 'GEORGIAN' or language == 'KAT' or language == 'KA':
+        language = "KAT"
 
     alphabet = alphabet_map[language]
     vowels = vowels_map[language]
@@ -51,7 +53,9 @@ def process(language, text, letters_to_keep='', letters_to_remove='', lowercase=
     if language == 'KAZ' and keep_romanized_text:
         alphabet = alphabet_map['KAZ_ROM']
         vowels = vowels_map['KAZ_ROM']
-
+    if language == 'KAT' and keep_romanized_text:
+        alphabet = alphabet_map['KAT_ROM']
+        vowels = vowels_map['KAT_ROM']
 
     '''Prepare the lists of the letters to be explictily kept and removed'''
     letters_in = list(letters_to_keep)
@@ -65,10 +69,10 @@ def process(language, text, letters_to_keep='', letters_to_remove='', lowercase=
 
     '''Transliteration for Bulgarian'''
     if language == "BUL" and not keep_romanized_text:
-        for key in bulgarian_transliteration:
+        for key in bulgarian_latin_transliteration:
             if key not in letters_in:
-                text = re.sub(r''+key, bulgarian_transliteration[key], text)
-                text = re.sub(r''+key.upper(), bulgarian_transliteration[key].upper(), text)
+                text = re.sub(r''+key, bulgarian_latin_transliteration[key], text)
+                text = re.sub(r''+key.upper(), bulgarian_latin_transliteration[key].upper(), text)
 
 
     '''Mapping for Pashto'''
@@ -87,10 +91,10 @@ def process(language, text, letters_to_keep='', letters_to_remove='', lowercase=
 
     '''Transliteration for Farsi'''
     if language == "FAS" and not keep_romanized_text:
-        for key in farsi_transliteration:
+        for key in farsi_latin_transliteration:
             if key not in letters_in:
-                text = re.sub(r''+key, farsi_transliteration[key], text)
-                text = re.sub(r''+key.upper(), farsi_transliteration[key].upper(), text)
+                text = re.sub(r''+key, farsi_latin_transliteration[key], text)
+                text = re.sub(r''+key.upper(), farsi_latin_transliteration[key].upper(), text)
 
 
     '''Mapping for kazakh''' #homoglyphs
@@ -118,6 +122,13 @@ def process(language, text, letters_to_keep='', letters_to_remove='', lowercase=
             if key not in letters_in:
                 text = re.sub(r'' + key, kazakh_arabic_transliteration[key], text)
 
+
+    '''Transliteration for Georgian'''
+    if language == "KAT" and not keep_romanized_text:
+        for key in georgian_latin_transliteration:
+            if key not in letters_in:
+                text = re.sub(r''+key, georgian_latin_transliteration[key], text)
+                text = re.sub(r''+key.upper(), georgian_latin_transliteration[key].upper(), text)
 
     '''Lower-case text, if required'''
     if lowercase:
@@ -165,8 +176,8 @@ def process(language, text, letters_to_keep='', letters_to_remove='', lowercase=
         tokens = text.split()
         no_apostrophes = []
         for token in tokens:
-            if not bool(re.match("^\'+$", token)):
-                token = re.sub('\'', '', token)
+            if not bool(re.match("^[\'\ʼ]+$", token)):
+                token = re.sub('[\'\ʼ]', '', token)
             no_apostrophes.append(token)
         text = ' '.join(no_apostrophes)
 
@@ -190,8 +201,8 @@ def process(language, text, letters_to_keep='', letters_to_remove='', lowercase=
 
             '''Remove diacritics, if required.'''
             if char not in letters_in and remove_diacritics:
-                lower = char == char.lower()
-                char_norm = char
+                lower = (char == char.lower())
+                char_norm = char.lower()
                 if char_lower in diac_character_mappings:
                     char_norm = diac_character_mappings[char_lower]
                 else:
@@ -205,16 +216,18 @@ def process(language, text, letters_to_keep='', letters_to_remove='', lowercase=
                         char_norm = char_lower
 
                 # After removing the diacritics, some characters might need to be removed or transliterated.
-                if language == 'BUL' and not keep_romanized_text and char_norm in bulgarian_transliteration:
-                    char_norm = bulgarian_transliteration[char_norm]
+                if language == 'BUL' and not keep_romanized_text and char_norm in bulgarian_latin_transliteration:
+                    char_norm = bulgarian_latin_transliteration[char_norm]
                 elif language == 'PUS' and char_norm in pashto_diac:
                     char_norm = ''
                 elif language == 'FAS' and char_norm in farsi_diac:
                     char_norm = ''
-                elif language == 'FAS' and not keep_romanized_text and char_norm in farsi_transliteration:
-                    char_norm = farsi_transliteration[char_norm]
+                elif language == 'FAS' and not keep_romanized_text and char_norm in farsi_latin_transliteration:
+                    char_norm = farsi_latin_transliteration[char_norm]
                 elif language == 'KAZ' and not keep_romanized_text and char_norm in kazakh_latin_transliteration:
                     char_norm = kazakh_latin_transliteration[char_norm]
+                elif language == 'KAT' and not keep_romanized_text and char_norm in georgian_latin_transliteration:
+                    char_norm = georgian_latin_transliteration[char_norm]
 
                 if not lower:
                     char_norm = char_norm.upper()
@@ -239,5 +252,5 @@ def process(language, text, letters_to_keep='', letters_to_remove='', lowercase=
     return text
 
 def is_punc(char):
-    ss = (char != "'" and not re.match(digit, char) and (not char.isalnum() or bool(re.match(punctuation_symbol, char)) or bool(re.match(emoji_symbol, char))))
-    return ss
+    punct = (char != "'" and not re.match(digit, char) and (not char.isalnum() or bool(re.match(punctuation_symbol, char)) or bool(re.match(emoji_symbol, char))))
+    return punct

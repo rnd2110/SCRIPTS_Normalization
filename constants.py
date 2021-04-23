@@ -4,8 +4,7 @@ digit = '[\d፩፪፫፬፭፮፯፰፱፲፳፴፵፶፷፸፹፺፻፼零一�
 
 number = '^\%?' + digit + '+(([\.\,\:\-\/\٫])?' + digit + ')*$'
 
-punctuation_symbol = '[\_\”\`\.\.\,\;\:\?\!\[\]\{\}\(\)\|\~\<\>\*\\\\/\+\-\=\%\$\#\@\^\u00ad]'
-punctuation_symbol = '[µ¼º²Δ⁰¾ⅣⅢⅡ½ㆍφθ\u064b\u064c\u064d\u064e\u064f\u0650\u0651\u0652\u0656\u065d\u0670\u0618\u0619\u061A]+'
+punctuation_symbol = '[\_\”\`\.\.\,\;\:\?\!\[\]\{\}\(\)\|\~\<\>\ː\*\\\\/\+\-\=\%\$\#\@\^µˆ¹³¼º²Δ⁰¾ⅣⅢⅡ½ㆍφθ\u064b\u064c\u064d\u064e\u064f\u0650\u0651\u0652\u0656\u065d\u0670\u0618\u0619\u061A\u00ad]+'
 
 emoji_symbol = re.compile(
     "(["
@@ -63,6 +62,13 @@ kazakh_romanized_alphabet = "abcdefƒghijklmnopqrstuvwxyzјàäćїúüóòöń�
 kazakh_vowels = "әеіөүаыоұийуэ"
 kazakh_romanized_vowels = "aeiouàäїúüóòöéè" + kazakh_vowels
 
+georgian_alphabet = "აბგდევზთიკლმნოპჟრსტუფქღყშჩცძწჭხჯჰჱჲჳჴჵ"
+georgian_romanized_alphabet = "abcdeghijklmnopqrstuv'`" + georgian_alphabet
+georgian_vowels = "აეიოუ"
+georgian_romanized_vowels = "aeiou" + georgian_vowels
+#diacritics: ა́ა̈ა̄ა̄̈ე́ე̄ი́ი̄ო́ო̈ო̄ო̄̈უ́უ̂უ̈უ̄უ̄̈ჷ́ჷ̄
+
+
 alphabet_map = {}
 alphabet_map["ENG"] = english_alphabet
 alphabet_map["TGL"] = tagalog_alphabet
@@ -77,6 +83,8 @@ alphabet_map["FAS"] = farsi_alphabet
 alphabet_map["FAS_ROM"] = farsi_romanized_alphabet
 alphabet_map["KAZ"] = kazakh_alphabet
 alphabet_map["KAZ_ROM"] = kazakh_romanized_alphabet
+alphabet_map["KAT"] = georgian_alphabet
+alphabet_map["KAT_ROM"] = georgian_romanized_alphabet
 
 vowels_map = {}
 vowels_map["ENG"] = english_vowels
@@ -92,6 +100,8 @@ vowels_map["FAS"] = farsi_vowels
 vowels_map["FAS_ROM"] = farsi_romanized_vowels
 vowels_map["KAZ"] = kazakh_vowels
 vowels_map["KAZ_ROM"] = kazakh_romanized_vowels
+vowels_map["KAT"] = georgian_vowels
+vowels_map["KAT_ROM"] = georgian_romanized_vowels
 
 ''' Special cases not handled by the default unicode undiacritization '''
 diac_character_mappings = {
@@ -111,7 +121,7 @@ diac_character_mappings = {
 }
 
 # source: https://www.loc.gov/catdir/cpso/romanization/bulgarian.pdf
-bulgarian_transliteration = {
+bulgarian_latin_transliteration = {
     'ch': 'ч',
     'ja': 'я',
     'ju': 'ю',
@@ -365,7 +375,7 @@ farsi_character_mappings = {
     '9': '۹'
 }
 
-farsi_transliteration = {
+farsi_latin_transliteration = {
     'ء': "'",
     'آ': "|",
     'أ': "^",
@@ -642,4 +652,51 @@ kazakh_arabic_transliteration = {
     "ﻱ": "й",
     "ﺌ": "и",
     "ﻧ": "н",
+}
+
+georgian_latin_transliteration = {
+    "a": "ა",
+    "b": "ბ",
+    "ch'ʼ": "ჭ",
+    "chʼ": "ჭ",
+    "ch": "ჩ",
+    "dz": "ძ",
+    "d": "დ",
+    #"ej": "ჱ",
+    "e": "ე",
+    "gh": "ღ",
+    "g": "გ",
+    "h": "ჰ",
+    "i": "ი",
+    #"j": "ჲ",
+    "j": "ჯ",
+    "kh": "ხ",
+    "k'ʼ": "კ",
+    "kʼ": "კ",
+    "k": "ქ",
+    "l": "ლ",
+    "m": "მ",
+    "n": "ნ",
+    "o": "ო",
+    #"ȯ": "ჵ",`
+    "p'": "პ",
+    "pʼ": "პ",
+    "p": "ფ",
+    "q'": "ყ",
+    "qʼ": "ყ",
+    #"q̌": "ჴ",
+    "r": "რ",
+    "sh": "შ",
+    "s": "ს",
+    "ts'": "წ",
+    "tsʼ": "წ",
+    "ts": "ც",
+    "t'": "ტ",
+    "tʼ": "ტ",
+    "t": "თ",
+    "u": "უ",
+    #"ŭ": "ჳ",
+    "v": "ვ",
+    "zh": "ჟ",
+    "z": "ზ",
 }
