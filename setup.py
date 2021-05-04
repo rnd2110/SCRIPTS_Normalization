@@ -4,7 +4,7 @@ with open("readme.txt", "r") as fp:
     long_description = fp.read()
 
 setuptools.setup(
-    name="scripts_normalization",
+    name="scriptnorm",
     version="4.0",
     author="Ramy Eskander",
     author_email="rnd2110@columbia.edu",
@@ -12,7 +12,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/rnd2110/SCRIPTS_Normalization",
-    packages=["scripts_normalization"],
+    packages=["scriptnorm"],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
