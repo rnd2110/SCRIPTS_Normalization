@@ -49,7 +49,7 @@ Where the arguments are as follow:
 11- remove_spaces:boolean
 12- remove_apostrophe:boolean
 13- copy_through:boolean: When set to True, none of the foreign letters gets omitted.
-14- keep_romanized_text:boolean: This argument works when the language has a non-Latin script (Bulgarian and Pashto). When set to True, none of the letters of the Romanized Bulgarian script (a-z + ŭĭui͡ei͡ai͡u), in the case of Bulgarian, and the Romanized Pashto script (a-z), in the case of Pashto) gets omitted. When set to False, the Romanized Bulgarian letters are transliterated into the Cyrillic script, in the case of Bulgarian, and the romanized Pashto letters are omitted (transliteration is Pashto is not supported).
+14- keep_romanized_text:boolean: This argument works when the language has a non-Latin script (Bulgarian and Pashto). When set to True, none of the letters of the Romanized Bulgarian script (a-z + ŭĭui͡ei͡ai͡u), in the case of Bulgarian, and the Romanized Pashto script (a-z), in the case of Pashto) gets omitted. When set to False, the Romanized Bulgarian letters are transliterated into the Cyrillic script, in the case of Bulgarian, and the romanized Pashto letters are omitted (transliteration in Pashto is not supported).
 
 Note: In the case of Pashto, text cleanup is always performed. This includes:
 1- Converting some letters that are not in the original Pashto and Farsi scripts to their Pashto cognates
